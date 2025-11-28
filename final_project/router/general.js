@@ -35,15 +35,16 @@ public_users.post("/register", (req, res) => {
 });
 
 // Get the book list available in the shop
-public_users.get("/", function (req, res) {
-  let bookList = JSON.stringify(books);
-  return res.status(200).send(bookList);
+public_users.get("/", (req, res) => {
+  Promise.resolve(JSON.stringify(books)).then((bookList) =>
+    res.status(200).send(bookList)
+  );
 });
 
 // Get book details based on ISBN
 public_users.get("/isbn/:isbn", function (req, res) {
   let isbn = req.params.isbn;
-  return res.status(200).send(books[isbn]);
+  Promise.resolve(books[isbn]).then((myBook) => res.status(200).send(myBook));
 });
 
 // Get book details based on author
